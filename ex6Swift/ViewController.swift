@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     @IBOutlet weak var img1 : UIImageView!
@@ -48,9 +49,20 @@ class ViewController: UIViewController {
         }
     }
     var timer: Timer? = nil
+    var player:AVAudioPlayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let path = Bundle.main.path(forResource: "ProudOfYou", ofType: ".mp3")
+        let url:URL = URL(fileURLWithPath: path!)
+        do{
+            player = try AVAudioPlayer(contentsOf: url)
+            player.numberOfLoops = -1
+            player.play()
+        } catch {
+            print("Player Error")
+        }
+        
         imageView = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24]
     }
     
@@ -190,6 +202,7 @@ extension ViewController {
                 return
             }
         }
+        player.stop()
         timer?.invalidate()
         timer = nil
         var message : String = ""
